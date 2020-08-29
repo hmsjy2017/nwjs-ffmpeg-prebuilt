@@ -3,6 +3,8 @@ name: CI
 on:
   release:
     types: [created]
+  watch:
+    types: started
   push:
     branches:
       - master
@@ -21,6 +23,7 @@ jobs:
           npm install
           node build --arch x64
           node build --arch ia32
+          node build --arch arm
       - name: Upload the artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -28,7 +31,7 @@ jobs:
           path: 'build/out/*.zip'
 
   build-macos:
-    runs-on: macos
+    runs-on: macos-latest
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
@@ -58,6 +61,7 @@ jobs:
           npm install
           node build --arch x64
           node build --arch ia32
+          node build --arch arm
       - name: Upload the artifacts
         uses: actions/upload-artifact@v2
         with:
